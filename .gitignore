@@ -5,3 +5,6 @@
 
 *.class
 *.jar
+
+target/
+heroes.txt
