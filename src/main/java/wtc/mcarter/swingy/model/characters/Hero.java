@@ -2,6 +2,7 @@ package wtc.mcarter.swingy.model.characters;
 
 import javax.validation.constraints.NotNull;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import wtc.mcarter.swingy.model.artifacts.Armor;
@@ -14,7 +15,30 @@ public abstract class Hero extends Character {
     private Weapon weapon;
     @NotNull
     private Armor armor;
+    @NotNull
+    private String name;
+
+    public Hero(String name) {
+        this.name = name;
+    }
 
     int level;
     int experience;
+
+    @Setter(AccessLevel.NONE)
+    protected int baseDefense;
+    @Setter(AccessLevel.NONE)
+    protected int baseAttack;
+
+    public int getDefense() {
+        return baseDefense + armor.getDefense();
+    }
+
+    public int getDamage() {
+        return baseAttack + weapon.getDamage();
+    }
+
+    public void setHelm(int helmHP) {
+        hp += helmHP;
+    }
 }
