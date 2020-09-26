@@ -57,4 +57,14 @@ public class HeroStorage {
         }
         Main.logger.logMessage("Saved " + heroList.size() + " heroes.");
     }
+
+    public static void AddHero(Hero hero) {
+        Main.logger.logMessage("Adding hero...");
+        heroList.add(hero);
+    }
+
+    public static void RemoveHero(Hero hero) {
+        Main.logger.logMessage("Removing hero...");
+        heroList.remove(hero);
+    }
 }
