@@ -20,7 +20,7 @@ public class GamePlayController {
                 Main.logger.logMessage("Starting Console mode");
 
                 ConsoleModeController consoleModeController = new ConsoleModeController();
-                consoleModeController.Start();
+                consoleModeController.Start(this);
             } else if (mode == "gui") {
                 mode = "";
                 Main.logger.logMessage("Starting GUI mode");

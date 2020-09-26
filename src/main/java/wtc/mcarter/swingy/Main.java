@@ -3,6 +3,7 @@ package wtc.mcarter.swingy;
 import java.io.IOException;
 import java.util.Arrays;
 
+import wtc.mcarter.swingy.controller.GamePlayController;
 import wtc.mcarter.swingy.exceptions.HeroTypeNotFoundException;
 import wtc.mcarter.swingy.exceptions.WeaponTypeNotFoundException;
 import wtc.mcarter.swingy.storage.HeroStorage;
@@ -25,11 +26,19 @@ public class Main {
         String heroStorageFile = "heroes.txt";
         String loggerFile = "log.txt";
         String waitingFor = "";
+        GamePlayController gamePlayController = new GamePlayController();
+        gamePlayController.SetConsole();
 
         for (String string : args) {
             switch (waitingFor) {
                 case "":
                     switch (string) {
+                        case "console":
+                            gamePlayController.SetConsole();
+                            break;
+                        case "gui":
+                            gamePlayController.SetGUI();
+                            break;
                         case "--log":
                             waitingFor = "log";
                             break;
@@ -73,7 +82,7 @@ public class Main {
             logger.logMessage("Could not load heroes: " + e.getMessage(), true);
         }
 
-
+        gamePlayController.Start();
 
         try {
             HeroStorage.SaveHeroes(heroStorageFile);
