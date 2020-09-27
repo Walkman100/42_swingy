@@ -30,12 +30,12 @@ public abstract class Hero extends Character {
     @Setter(AccessLevel.NONE)
     protected int baseAttack;
 
-    public int getDefense() {
-        return baseDefense + armor.getDefense();
-    }
-
     public int getDamage() {
         return baseAttack + weapon.getDamage();
+    }
+
+    public int getDefense() {
+        return baseDefense + armor.getDefense();
     }
 
     public void setHelm(int helmHP) {

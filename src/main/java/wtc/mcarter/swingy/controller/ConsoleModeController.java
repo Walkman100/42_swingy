@@ -4,6 +4,7 @@ import wtc.mcarter.swingy.Main;
 import wtc.mcarter.swingy.exceptions.HeroTypeNotFoundException;
 import wtc.mcarter.swingy.model.characters.Hero;
 import wtc.mcarter.swingy.storage.HeroStorage;
+import wtc.mcarter.swingy.util.PadStr;
 import wtc.mcarter.swingy.util.CharacterFactory.HeroTypes;
 
 public class ConsoleModeController {
@@ -28,15 +29,19 @@ public class ConsoleModeController {
     private Hero getHeroSelection() {
         clear();
         Main.logger.logMessage("Showing hero selection...");
-        Main.logger.writeLine("Choose a character - enter the number and press enter. Use 'n' to create a new character, and 'e' or 'd' to exit" + System.lineSeparator());
+        Main.logger.writeLine("Choose a character - enter the number and press enter. Use 'n' to create a new character, and 'e', 'd' or 'q' to exit" + System.lineSeparator());
 
+        Main.logger.writeLine("  # | Name                 | Class  | Level |  XP | ATK | DEF |  HP |");
         for (int i = 0; i < HeroStorage.getHeroList().size(); i++) {
             Hero hero = HeroStorage.getHeroList().get(i);
-            Main.logger.writeLine(i + " " +
-                    hero.getClass().getSimpleName() + ": " +
-                    hero.getName() + " (lv" +
-                    hero.getLevel() + " xp" +
-                    hero.getExperience() + ")");
+            Main.logger.writeLine(PadStr.padLeft(i, 3) + " | " +
+                    PadStr.padRight(hero.getName(), 21) + "| " +
+                    PadStr.padRight(hero.getClass().getSimpleName(), 7) + "| " +
+                    PadStr.padRight(hero.getLevel(), 6) + "| " +
+                    PadStr.padLeft(hero.getExperience(), 3) + " | " +
+                    PadStr.padLeft(hero.getDamage(), 3) + " | " +
+                    PadStr.padLeft(hero.getDefense(), 3) + " | " +
+                    PadStr.padLeft(hero.getHp(), 3) + " |");
         }
 
         if (HeroStorage.getHeroList().size() == 0) {
@@ -50,7 +55,7 @@ public class ConsoleModeController {
         if (input.toLowerCase().equals("n")) {
             showCreateHero();
             return getHeroSelection();
-        } else if (input.toLowerCase().equals("e") || input.toLowerCase().equals("d")) {
+        } else if (input.toLowerCase().equals("e") || input.toLowerCase().equals("d") || input.toLowerCase().equals("q")) {
             return null;
         }
 
