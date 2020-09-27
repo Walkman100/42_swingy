@@ -4,6 +4,7 @@ import wtc.mcarter.swingy.Main;
 import wtc.mcarter.swingy.exceptions.HeroTypeNotFoundException;
 import wtc.mcarter.swingy.model.characters.Hero;
 import wtc.mcarter.swingy.storage.HeroStorage;
+import wtc.mcarter.swingy.util.Misc;
 import wtc.mcarter.swingy.util.PadStr;
 import wtc.mcarter.swingy.util.CharacterFactory.HeroTypes;
 
@@ -48,9 +49,8 @@ public class ConsoleModeController {
             Main.logger.writeLine("No characters found.");
         }
 
-        Main.logger.write(System.lineSeparator() + "> ");
-        String input = System.console().readLine();
-        Main.logger.logMessage("Got input: " + input);
+        String input = Misc.getInput();
+        Main.logger.logMessage("Got selection input: " + input);
 
         if (input.toLowerCase().equals("n")) {
             showCreateHero();
@@ -63,8 +63,7 @@ public class ConsoleModeController {
             int sel = Integer.parseInt(input);
             return HeroStorage.getHeroList().get(sel);
         } catch (NumberFormatException | IndexOutOfBoundsException e) {
-            Main.logger.write("Invalid input! ");
-            System.console().readLine();
+            Misc.getInput("Invalid input! ");
             return getHeroSelection();
         }
     }
@@ -80,8 +79,7 @@ public class ConsoleModeController {
             sel++;
         }
 
-        Main.logger.write(System.lineSeparator() + "> ");
-        String input = System.console().readLine();
+        String input = Misc.getInput();
         Main.logger.logMessage("Got new hero type input: " + input);
 
         HeroTypes heroType;
@@ -89,15 +87,13 @@ public class ConsoleModeController {
             sel = Integer.parseInt(input);
             heroType = HeroTypes.values()[sel];
         } catch (NumberFormatException | IndexOutOfBoundsException e) {
-            Main.logger.write("Invalid input! ");
-            System.console().readLine();
+            Misc.getInput("Invalid input! ");
             showCreateHero();
             return;
         }
 
         Main.logger.writeLine(System.lineSeparator() + "Enter hero name:");
-        Main.logger.write("> ");
-        input = System.console().readLine();
+        input = Misc.getInput();
         Main.logger.logMessage("Got new hero name input: " + input);
 
         try {

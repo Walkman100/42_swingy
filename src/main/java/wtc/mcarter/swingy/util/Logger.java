@@ -18,6 +18,10 @@ public class Logger {
         }
     }
 
+    public void writeLine() {
+        System.out.println();
+    }
+
     public void writeLine(String line) {
         System.out.println(line);
     }
