@@ -1,8 +1,9 @@
 package wtc.mcarter.swingy.model.artifacts;
 
 import lombok.Getter;
+import wtc.mcarter.swingy.model.characters.Hero;
 
-public class Weapon {
+public class Weapon implements Artifact {
     @Getter
     private WeaponType type;
 
@@ -10,11 +11,16 @@ public class Weapon {
         this.type = weaponType;
     }
 
+    public String getEffect() {
+        return "Damage: " + getDamage();
+    }
+
+    public void setToHero(Hero hero) {
+        hero.setWeapon(this);
+    }
+
     public Boolean isRanged() {
-        if (type == WeaponType.CrossBow || type == WeaponType.LongBow)
-            return true;
-        else
-            return false;
+        return type == WeaponType.CrossBow || type == WeaponType.LongBow;
     }
 
     public int getDamage() {

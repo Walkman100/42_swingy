@@ -45,4 +45,8 @@ public class Algos {
         // https://gamedev.stackexchange.com/a/129322/88288
         return atk * atk / (atk + def);
     }
+
+    public static boolean getArtifactDrop() {
+        return getRandom(0, 100) <= 60; // 60% drop rate
+    }
 }
