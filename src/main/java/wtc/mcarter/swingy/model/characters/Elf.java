@@ -5,7 +5,7 @@ public class Elf extends Hero {
         super(name);
 
         baseDefense = 10;
-        baseAttack = 20;
+        baseAttack = 15;
         hp = 10;
     }
 }
