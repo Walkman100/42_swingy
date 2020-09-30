@@ -3,6 +3,7 @@ package wtc.mcarter.swingy.controller;
 import wtc.mcarter.swingy.Main;
 import wtc.mcarter.swingy.exceptions.HeroTypeNotFoundException;
 import wtc.mcarter.swingy.model.Game;
+import wtc.mcarter.swingy.model.artifacts.Artifact;
 import wtc.mcarter.swingy.model.characters.BlackMage;
 import wtc.mcarter.swingy.model.characters.Hero;
 import wtc.mcarter.swingy.model.characters.Orc;
@@ -205,11 +206,26 @@ public class ConsoleModeController {
             }
 
             Main.logger.writeLine("Fighting enemy " + villain.getClass().getSimpleName() + "...");
-            gamePlayController.SimulateFight(hero, villain);
+            Artifact droppedArtifact = gamePlayController.SimulateFight(hero, villain);
+
+            if (droppedArtifact != null) {
+                Main.logger.logMessage("Enemy defeated, artifact dropped: " + droppedArtifact.getClass().getSimpleName() + " Effect: " + droppedArtifact.getEffect());
+
+                Main.logger.write("Defeated enemy dropped an artifact. Type: " + droppedArtifact.getClass().getSimpleName() + " Effect: " + droppedArtifact.getEffect() + ". Equip (y/*)?");
+                input = Misc.getInput();
+                Main.logger.logMessage("Got pick up artifact input: " + input);
+
+                if (input.toLowerCase().equals("y")) {
+                    droppedArtifact.setToHero(hero);
+                }
+            } else if (villain.getHp() <= 0) {
+                Main.logger.logMessage("Enemy defeated, no artifact dropped.");
+                Main.logger.write("Defeated enemy! ");
+            }
 
             if (villain.getHp() <= 0) {
-                Main.logger.logMessage("Enemy defeated. Moved to X:" + x + " Y:" + y);
-                Main.logger.write("Defeated enemy! Moved to new location. ");
+                Main.logger.logMessage("Moved to X:" + x + " Y:" + y);
+                Main.logger.write("Moved to new location. ");
                 game.posX = x;
                 game.posY = y;
             } else if (hero.getHp() <= 0) {

@@ -1,9 +1,11 @@
 package wtc.mcarter.swingy.controller;
 
 import wtc.mcarter.swingy.Main;
+import wtc.mcarter.swingy.model.artifacts.Artifact;
 import wtc.mcarter.swingy.model.characters.Hero;
 import wtc.mcarter.swingy.model.characters.Villain;
 import wtc.mcarter.swingy.util.Algos;
+import wtc.mcarter.swingy.util.ArtifactFactory;
 
 public class GamePlayController {
     private String mode = "console";
@@ -31,7 +33,7 @@ public class GamePlayController {
         } while (mode != "");
     }
 
-    public void SimulateFight(Hero hero, Villain villain) {
+    public Artifact SimulateFight(Hero hero, Villain villain) {
         Main.logger.logMessage("Simulating fight between hero " + hero.getClass().getSimpleName() + " and villain " + villain.getClass().getSimpleName());
 
         while (hero.getHp() > 0 && villain.getHp() > 0) {
@@ -47,6 +49,12 @@ public class GamePlayController {
                 hero.setHp(hero.getHp() - dmg);
                 Main.logger.logMessage("New hero hp:" + hero.getHp());
             }
+        }
+
+        if (hero.getHp() > 0) {
+            return ArtifactFactory.generate();
+        } else {
+            return null;
         }
     }
 }

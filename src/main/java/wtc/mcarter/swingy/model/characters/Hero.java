@@ -6,6 +6,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import wtc.mcarter.swingy.model.artifacts.Armor;
+import wtc.mcarter.swingy.model.artifacts.Helm;
 import wtc.mcarter.swingy.model.artifacts.Weapon;
 
 @Getter
@@ -40,5 +41,9 @@ public abstract class Hero extends Character {
 
     public void setHelm(int helmHP) {
         hp += helmHP;
+    }
+
+    public void setHelm(Helm helm) {
+        hp += helm.getHpBoost();
     }
 }
