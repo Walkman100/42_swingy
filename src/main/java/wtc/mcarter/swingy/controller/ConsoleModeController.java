@@ -43,6 +43,7 @@ public class ConsoleModeController {
         if (shouldQuit)
             return;
 
+        HeroStorage.RemoveHero(hero);
         if (showHeroDied() == true)
             gamePlayController.SetConsole();
     }
@@ -140,7 +141,7 @@ public class ConsoleModeController {
         }
 
         // take user input
-        Main.logger.writeLine(System.lineSeparator() + "Enter move command (l/r/u/d/n/e/s/w, q):");
+        Main.logger.write(System.lineSeparator() + "Enter move command (l/r/u/d/n/e/s/w, q):");
         String input = Misc.getInput();
         Main.logger.logMessage("Got movement input: " + input);
 
@@ -188,9 +189,9 @@ public class ConsoleModeController {
                 villain = new Orc();
             Main.logger.logMessage("Enemy type: " + villain.getClass().getSimpleName());
 
-            Main.logger.writeLine("Encountered enemy " + villain.getClass().getSimpleName() + "! Attempt to run (y/n)?");
+            Main.logger.write("Encountered enemy " + villain.getClass().getSimpleName() + "! Attempt to run (y/*)?");
             String input = Misc.getInput();
-            Main.logger.logMessage("Got fight input: " + input);
+            Main.logger.logMessage("Got run input: " + input);
 
             if (input.toLowerCase().equals("y")) {
                 if (Algos.getMustFight()) {
@@ -211,7 +212,9 @@ public class ConsoleModeController {
                 Main.logger.write("Defeated enemy! Moved to new location. ");
                 game.posX = x;
                 game.posY = y;
-            } // hero.getHp() <= 0  is handled by Start()
+            } else if (hero.getHp() <= 0) {
+                return; // skip readLine at the end
+            }
         } else {
             Main.logger.logMessage("Nothing found at target. Moved to X:" + x + " Y:" + y);
             Main.logger.write("Moved! ");
@@ -223,6 +226,11 @@ public class ConsoleModeController {
 
     private boolean showHeroDied() {
         clear();
-        return false;
+        Main.logger.logMessage("Hero died.");
+        Main.logger.write("You died! Start again (y/*)?");
+        String input = Misc.getInput();
+        Main.logger.logMessage("Got retry input: " + input);
+
+        return input.toLowerCase().equals("y");
     }
 }
