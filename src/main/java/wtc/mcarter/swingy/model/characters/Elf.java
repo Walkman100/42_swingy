@@ -6,6 +6,6 @@ public class Elf extends Hero {
 
         baseDefense = 10;
         baseAttack = 15;
-        hp = 10;
+        hp = 20;
     }
 }

@@ -6,6 +6,6 @@ public class Knight extends Hero {
 
         baseDefense = 15;
         baseAttack = 10;
-        hp = 20;
+        hp = 30;
     }
 }
