@@ -224,6 +224,9 @@ public class ConsoleModeController {
             }
 
             if (villain.getHp() <= 0) {
+                Main.logger.logMessage("Enemy dropped " + villain.getXpDrop() + " XP");
+                Misc.addXP(hero, villain.getXpDrop());
+
                 Main.logger.logMessage("Moved to X:" + x + " Y:" + y);
                 Main.logger.write("Moved to new location. ");
                 game.posX = x;
