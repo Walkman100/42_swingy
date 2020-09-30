@@ -2,6 +2,8 @@ package wtc.mcarter.swingy.util;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+import wtc.mcarter.swingy.model.artifacts.Weapon;
+
 public class Algos {
     public static int getGameSize(int level) {
         return (level - 1) * 5 + 10 - (level % 2);
@@ -33,5 +35,14 @@ public class Algos {
 
     public static boolean getMustFight() {
         return getRandom(0, 1) == 1;
+    }
+
+    public static boolean getDoesWeaponHit(Weapon weapon) {
+        return getRandom(0, 100) <= weapon.getHitChance();
+    }
+
+    public static int getDamage(int atk, int def) {
+        // https://gamedev.stackexchange.com/a/129322/88288
+        return atk * atk / (atk + def);
     }
 }
