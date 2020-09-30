@@ -3,7 +3,10 @@ package wtc.mcarter.swingy.controller;
 import wtc.mcarter.swingy.Main;
 import wtc.mcarter.swingy.exceptions.HeroTypeNotFoundException;
 import wtc.mcarter.swingy.model.Game;
+import wtc.mcarter.swingy.model.characters.BlackMage;
 import wtc.mcarter.swingy.model.characters.Hero;
+import wtc.mcarter.swingy.model.characters.Orc;
+import wtc.mcarter.swingy.model.characters.Villain;
 import wtc.mcarter.swingy.storage.HeroStorage;
 import wtc.mcarter.swingy.util.Algos;
 import wtc.mcarter.swingy.util.Misc;
@@ -11,6 +14,7 @@ import wtc.mcarter.swingy.util.PadStr;
 import wtc.mcarter.swingy.util.CharacterFactory.HeroTypes;
 
 public class ConsoleModeController {
+    private GamePlayController gamePlayController;
     private Game game;
     private boolean shouldQuit;
 
@@ -19,7 +23,11 @@ public class ConsoleModeController {
         System.out.flush();
     }
 
-    public void Start(GamePlayController gamePlayController) {
+    public ConsoleModeController(GamePlayController gamePlayController) {
+        this.gamePlayController = gamePlayController;
+    }
+
+    public void Start() {
         game = new Game();
         Hero hero = getHeroSelection();
         if (hero == null)
@@ -29,9 +37,9 @@ public class ConsoleModeController {
         game.posY = 0;
         shouldQuit = false;
 
-        do {
+        while (hero.getHp() > 0 && shouldQuit == false) {
             showLevel(hero);
-        } while (hero.getHp() > 0 && shouldQuit == false);
+        }
         if (shouldQuit)
             return;
 
@@ -141,22 +149,22 @@ public class ConsoleModeController {
             case "l":
             case "w":
                 Main.logger.writeLine("Moving Left...");
-                tryMove(game.posX - 1, game.posY);
+                tryMove(hero, game.posX - 1, game.posY);
                 return;
             case "r":
             case "e":
                 Main.logger.writeLine("Moving Right...");
-                tryMove(game.posX + 1, game.posY);
+                tryMove(hero, game.posX + 1, game.posY);
                 return;
             case "u":
             case "n":
                 Main.logger.writeLine("Moving Up...");
-                tryMove(game.posX, game.posY - 1);
+                tryMove(hero, game.posX, game.posY - 1);
                 return;
             case "d":
             case "s":
                 Main.logger.writeLine("Moving Down...");
-                tryMove(game.posX, game.posY + 1);
+                tryMove(hero, game.posX, game.posY + 1);
                 return;
             case "q":
                 shouldQuit = true;
@@ -167,10 +175,43 @@ public class ConsoleModeController {
         }
     }
 
-    private void tryMove(int x, int y) {
+    private void tryMove(Hero hero, int x, int y) {
         if (x < -(game.gameSize / 2) || y < -(game.gameSize / 2) || x > game.gameSize / 2 || y > game.gameSize / 2) {
             Main.logger.logMessage("Invalid location to move to. Aborted.");
             Main.logger.write("Invalid location! ");
+        } else if (Algos.getEncounteredEnemy()) {
+            Main.logger.logMessage("Found enemy!");
+            Villain villain;
+            if (Algos.getRandom(0, 1) == 1)
+                villain = new BlackMage();
+            else
+                villain = new Orc();
+            Main.logger.logMessage("Enemy type: " + villain.getClass().getSimpleName());
+
+            Main.logger.writeLine("Encountered enemy " + villain.getClass().getSimpleName() + "! Attempt to run (y/n)?");
+            String input = Misc.getInput();
+            Main.logger.logMessage("Got fight input: " + input);
+
+            if (input.toLowerCase().equals("y")) {
+                if (Algos.getMustFight()) {
+                    Main.logger.logMessage("Run failed. Continuing with fight...");
+                    Main.logger.writeLine("You were caught!");
+                } else {
+                    Main.logger.logMessage("Run back successful.");
+                    Misc.getInput("Ran back successfully. ");
+                    return;
+                }
+            }
+
+            Main.logger.writeLine("Fighting enemy " + villain.getClass().getSimpleName() + "...");
+            gamePlayController.SimulateFight(hero, villain);
+
+            if (villain.getHp() <= 0) {
+                Main.logger.logMessage("Enemy defeated. Moved to X:" + x + " Y:" + y);
+                Main.logger.write("Defeated enemy! Moved to new location. ");
+                game.posX = x;
+                game.posY = y;
+            } // hero.getHp() <= 0  is handled by Start()
         } else {
             Main.logger.logMessage("Nothing found at target. Moved to X:" + x + " Y:" + y);
             Main.logger.write("Moved! ");
