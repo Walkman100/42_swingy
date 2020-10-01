@@ -10,9 +10,8 @@ import wtc.mcarter.swingy.model.characters.Orc;
 import wtc.mcarter.swingy.model.characters.Villain;
 import wtc.mcarter.swingy.storage.HeroStorage;
 import wtc.mcarter.swingy.util.Algos;
-import wtc.mcarter.swingy.util.Misc;
-import wtc.mcarter.swingy.util.PadStr;
 import wtc.mcarter.swingy.util.CharacterFactory.HeroTypes;
+import wtc.mcarter.swingy.util.Misc;
 
 public class ConsoleModeController {
     private GamePlayController gamePlayController;
@@ -52,19 +51,13 @@ public class ConsoleModeController {
         clear();
         Main.logger.logMessage("Showing hero selection...");
         Main.logger.writeLine("Choose a character - enter the number and press enter");
-        Main.logger.writeLine("Create character: 'n'; Exit: e/d/q; Switch to GUI: g" + System.lineSeparator());
+        Main.logger.writeLine("Create character: n; Switch to GUI: g; Exit: e/d/q" + System.lineSeparator());
 
-        Main.logger.writeLine("  # | Name                 | Class  | Level |  XP | ATK | DEF |  HP |");
+        Main.logger.writeLine("  # | Name                 | Class  | Level |   XP | ATK | DEF |  HP |");
         for (int i = 0; i < HeroStorage.getHeroList().size(); i++) {
             Hero hero = HeroStorage.getHeroList().get(i);
-            Main.logger.writeLine(PadStr.padLeft(i, 3) + " | " +
-                    PadStr.padRight(hero.getName(), 21) + "| " +
-                    PadStr.padRight(hero.getClass().getSimpleName(), 7) + "| " +
-                    PadStr.padRight(hero.getLevel(), 6) + "| " +
-                    PadStr.padLeft(hero.getExperience(), 3) + " | " +
-                    PadStr.padLeft(hero.getDamage(), 3) + " | " +
-                    PadStr.padLeft(hero.getDefense(), 3) + " | " +
-                    PadStr.padLeft(hero.getHp(), 3) + " |");
+            Main.logger.writeLine("%3s | %-21s| %-7s| %-6s|%5s |%4s |%4s |%4s |", i, hero.getName(), hero.getClass().getSimpleName(),
+                    hero.getLevel(), hero.getExperience(), hero.getDamage(), hero.getDefense(), hero.getHp());
         }
 
         if (HeroStorage.getHeroList().size() == 0) {
