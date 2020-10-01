@@ -34,18 +34,18 @@ public class GamePlayController {
     }
 
     public Artifact SimulateFight(Hero hero, Villain villain) {
-        Main.logger.logMessage("Simulating fight between hero " + hero.getClass().getSimpleName() + " and villain " + villain.getClass().getSimpleName());
+        Main.logger.logMessage("Simulating fight between hero %s and villain %s", hero.getClass().getSimpleName(), villain.getClass().getSimpleName());
 
         while (hero.getHp() > 0 && villain.getHp() > 0) {
             if (Algos.getDoesWeaponHit(hero.getWeapon())) {
-                Main.logger.logMessage("Hero weapon hits. Enemy hp:" + villain.getHp() + " Hero damage:" + hero.getDamage());
+                Main.logger.logMessage("Hero weapon hits. Enemy hp:%s Hero damage:%s", villain.getHp(), hero.getDamage());
                 villain.setHp(villain.getHp() - hero.getDamage());
                 Main.logger.logMessage("New enemy hp:" + villain.getHp());
             }
 
             if (villain.getHp() > 0) {
                 int dmg = Algos.getDamage(villain.getDamage(), hero.getDefense());
-                Main.logger.logMessage("Enemy still alive. Hero hp:" + hero.getHp() + " Enemy damage:" + dmg);
+                Main.logger.logMessage("Enemy still alive. Hero hp:%s Enemy damage:%s", hero.getHp(), dmg);
                 hero.setHp(hero.getHp() - dmg);
                 Main.logger.logMessage("New hero hp:" + hero.getHp());
             }

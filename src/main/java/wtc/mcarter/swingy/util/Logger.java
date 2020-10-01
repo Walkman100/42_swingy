@@ -26,7 +26,17 @@ public class Logger {
         System.out.println(line);
     }
 
+    public void writeLine(String line, Object... args) {
+        line = String.format(line, args);
+        System.out.println(line);
+    }
+
     public void write(String text) {
+        System.out.print(text);
+    }
+
+    public void write(String text, Object... args) {
+        text = String.format(text, args);
         System.out.print(text);
     }
 
@@ -44,6 +54,11 @@ public class Logger {
     }
 
     public void logMessage(String message) {
+        logMessage(message, false);
+    }
+
+    public void logMessage(String message, Object... args) {
+        message = String.format(message, args);
         logMessage(message, false);
     }
 }

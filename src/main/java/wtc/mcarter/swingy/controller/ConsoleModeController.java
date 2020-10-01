@@ -97,7 +97,7 @@ public class ConsoleModeController {
 
         int sel = 0;
         for (HeroTypes heroType : HeroTypes.values()) {
-            Main.logger.writeLine(sel + " " + heroType.name());
+            Main.logger.writeLine("%s %s", sel, heroType.name());
             sel++;
         }
 
@@ -126,8 +126,8 @@ public class ConsoleModeController {
     private void showLevel(Hero hero) {
         clear();
         Main.logger.logMessage("Showing game level. X:" + game.posX + " Y:" + game.posY);
-        Main.logger.writeLine("Swingy\t" + hero.getName() + ":" + hero.getClass().getSimpleName() + "\tlv" + hero.getLevel() + "\txp" + hero.getExperience());
-        Main.logger.writeLine("HP: " + hero.getHp() + "\tAtk: " + hero.getDamage() + "\tDef: " + hero.getDefense() + System.lineSeparator());
+        Main.logger.writeLine("Swingy\t%s[%s]\tLv:%s\tXP:%s", hero.getName(), hero.getClass().getSimpleName(), hero.getLevel(), hero.getExperience());
+        Main.logger.writeLine("HP: %s\tAtk: %s+%s\tDef: %s+%s%n", hero.getHp(), hero.getBaseAttack(), hero.getWeapon().getDamage(), hero.getBaseDefense(), hero.getArmor().getDefense());
 
         // render
         game.gameSize = Algos.getGameSize(hero.getLevel());
@@ -190,7 +190,7 @@ public class ConsoleModeController {
                 villain = new Orc();
             Main.logger.logMessage("Enemy type: " + villain.getClass().getSimpleName());
 
-            Main.logger.write("Encountered enemy " + villain.getClass().getSimpleName() + "! Attempt to run (y/*)?");
+            Main.logger.write("Encountered enemy %s! Attempt to run (y/*)?", villain.getClass().getSimpleName());
             String input = Misc.getInput();
             Main.logger.logMessage("Got run input: " + input);
 
@@ -205,13 +205,13 @@ public class ConsoleModeController {
                 }
             }
 
-            Main.logger.writeLine("Fighting enemy " + villain.getClass().getSimpleName() + "...");
+            Main.logger.writeLine("Fighting enemy %s...", villain.getClass().getSimpleName());
             Artifact droppedArtifact = gamePlayController.SimulateFight(hero, villain);
 
             if (droppedArtifact != null) {
-                Main.logger.logMessage("Enemy defeated, artifact dropped: " + droppedArtifact.getClass().getSimpleName() + " Effect: " + droppedArtifact.getEffect());
+                Main.logger.logMessage("Enemy defeated, artifact dropped: %s Effect: %s", droppedArtifact.getClass().getSimpleName(), droppedArtifact.getEffect());
 
-                Main.logger.write("Defeated enemy dropped an artifact. Type: " + droppedArtifact.getClass().getSimpleName() + " Effect: " + droppedArtifact.getEffect() + ". Equip (y/*)?");
+                Main.logger.write("Defeated enemy dropped an artifact. Type: %s Effect: %s. Equip (y/*)?", droppedArtifact.getClass().getSimpleName(), droppedArtifact.getEffect());
                 input = Misc.getInput();
                 Main.logger.logMessage("Got pick up artifact input: " + input);
 
@@ -224,10 +224,10 @@ public class ConsoleModeController {
             }
 
             if (villain.getHp() <= 0) {
-                Main.logger.logMessage("Enemy dropped " + villain.getXpDrop() + " XP");
+                Main.logger.logMessage("Enemy dropped %s XP", villain.getXpDrop());
                 Misc.addXP(hero, villain.getXpDrop());
 
-                Main.logger.logMessage("Moved to X:" + x + " Y:" + y);
+                Main.logger.logMessage("Moved to X:%s Y:%s", x, y);
                 Main.logger.write("Moved to new location. ");
                 game.posX = x;
                 game.posY = y;
@@ -235,7 +235,7 @@ public class ConsoleModeController {
                 return; // skip readLine at the end
             }
         } else {
-            Main.logger.logMessage("Nothing found at target. Moved to X:" + x + " Y:" + y);
+            Main.logger.logMessage("Nothing found at target. Moved to X:%s Y:%s", x, y);
             Main.logger.write("Moved! ");
             game.posX = x;
             game.posY = y;
