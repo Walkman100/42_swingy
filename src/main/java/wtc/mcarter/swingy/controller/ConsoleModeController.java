@@ -45,14 +45,14 @@ public class ConsoleModeController {
             return;
 
         HeroStorage.RemoveHero(hero);
-        if (showHeroDied() == true)
-            gamePlayController.SetConsole();
+        showHeroDied();
     }
 
     private Hero getHeroSelection() {
         clear();
         Main.logger.logMessage("Showing hero selection...");
-        Main.logger.writeLine("Choose a character - enter the number and press enter. Use 'n' to create a new character, and 'e', 'd' or 'q' to exit" + System.lineSeparator());
+        Main.logger.writeLine("Choose a character - enter the number and press enter");
+        Main.logger.writeLine("Create character: 'n'; Exit: e/d/q; Switch to GUI: g" + System.lineSeparator());
 
         Main.logger.writeLine("  # | Name                 | Class  | Level |  XP | ATK | DEF |  HP |");
         for (int i = 0; i < HeroStorage.getHeroList().size(); i++) {
@@ -74,11 +74,16 @@ public class ConsoleModeController {
         String input = Misc.getInput();
         Main.logger.logMessage("Got selection input: " + input);
 
-        if (input.toLowerCase().equals("n")) {
-            showCreateHero();
-            return getHeroSelection();
-        } else if (input.toLowerCase().equals("e") || input.toLowerCase().equals("d") || input.toLowerCase().equals("q")) {
-            return null;
+        switch (input.toLowerCase()) {
+            case "n":
+                showCreateHero();
+                return getHeroSelection();
+            case "g":
+                gamePlayController.SetGUI();
+            case "e":
+            case "d":
+            case "q":
+                return null;
         }
 
         try {
@@ -142,7 +147,7 @@ public class ConsoleModeController {
         }
 
         // take user input
-        Main.logger.write(System.lineSeparator() + "Enter move command (l/r/u/d/n/e/s/w, q):");
+        Main.logger.write(System.lineSeparator() + "Enter move command (l/r/u/d/n/e/s/w, q/g):");
         String input = Misc.getInput();
         Main.logger.logMessage("Got movement input: " + input);
 
@@ -152,28 +157,33 @@ public class ConsoleModeController {
             case "w":
                 Main.logger.writeLine("Moving Left...");
                 tryMove(hero, game.posX - 1, game.posY);
-                return;
+                break;
             case "r":
             case "e":
                 Main.logger.writeLine("Moving Right...");
                 tryMove(hero, game.posX + 1, game.posY);
-                return;
+                break;
             case "u":
             case "n":
                 Main.logger.writeLine("Moving Up...");
                 tryMove(hero, game.posX, game.posY - 1);
-                return;
+                break;
             case "d":
             case "s":
                 Main.logger.writeLine("Moving Down...");
                 tryMove(hero, game.posX, game.posY + 1);
-                return;
+                break;
             case "q":
+                gamePlayController.SetConsole();
                 shouldQuit = true;
-                return;
+                break;
+            case "g":
+                gamePlayController.SetGUI();
+                shouldQuit = true;
+                break;
             default:
                 Misc.getInput("Invalid input! ");
-                return;
+                break;
         }
     }
 
@@ -243,13 +253,16 @@ public class ConsoleModeController {
         System.console().readLine();
     }
 
-    private boolean showHeroDied() {
+    private void showHeroDied() {
         clear();
         Main.logger.logMessage("Hero died.");
-        Main.logger.write("You died! Start again (y/*)?");
+        Main.logger.write("You died! Start again (y/g/*)?");
         String input = Misc.getInput();
         Main.logger.logMessage("Got retry input: " + input);
 
-        return input.toLowerCase().equals("y");
+        if (input.toLowerCase().equals("y"))
+            gamePlayController.SetConsole();
+        else if (input.toLowerCase().equals("g"))
+            gamePlayController.SetGUI();
     }
 }
