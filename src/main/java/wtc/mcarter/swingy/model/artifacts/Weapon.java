@@ -12,7 +12,7 @@ public class Weapon implements Artifact {
     }
 
     public String getEffect() {
-        return "Damage: " + getDamage();
+        return String.format("Damage: %s (%s)", getDamage(), type.name());
     }
 
     public void setToHero(Hero hero) {
