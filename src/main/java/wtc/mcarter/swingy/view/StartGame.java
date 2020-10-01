@@ -2,8 +2,10 @@ package wtc.mcarter.swingy.view;
 
 import wtc.mcarter.swingy.model.characters.Hero;
 
-public class StartGame extends javax.swing.JFrame implements WindowManager {
+public class StartGame extends javax.swing.JDialog implements WindowManager {
     public StartGame() {
+        super((java.awt.Window) null, "Select Hero");
+        setModal(true);
         initComponents();
     }
 
@@ -13,7 +15,7 @@ public class StartGame extends javax.swing.JFrame implements WindowManager {
 
         jButton1 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jButton1.setText("Select hero");
         jButton1.addActionListener((evt) -> {

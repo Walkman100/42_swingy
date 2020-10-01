@@ -1,11 +1,15 @@
 package wtc.mcarter.swingy.controller;
 
+import javax.swing.JDialog;
+import javax.swing.UIManager;
+
 import wtc.mcarter.swingy.Main;
 import wtc.mcarter.swingy.model.artifacts.Artifact;
 import wtc.mcarter.swingy.model.characters.Hero;
 import wtc.mcarter.swingy.model.characters.Villain;
 import wtc.mcarter.swingy.util.Algos;
 import wtc.mcarter.swingy.util.ArtifactFactory;
+import wtc.mcarter.swingy.view.StartGame;
 
 public class GamePlayController {
     private String mode = "console";
@@ -29,6 +33,10 @@ public class GamePlayController {
             } else if (mode == "gui") {
                 mode = "";
                 Main.logger.logMessage("Starting GUI mode");
+
+                UIManager.put("swing.boldMetal", Boolean.FALSE);
+                JDialog frame = new StartGame();
+                frame.setVisible(true); // on a JDialog, this will block until window is disposed
             }
         } while (mode != "");
     }
