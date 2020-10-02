@@ -15,6 +15,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 
+import wtc.mcarter.swingy.Main;
 import wtc.mcarter.swingy.model.characters.Hero;
 import wtc.mcarter.swingy.storage.HeroStorage;
 
@@ -23,6 +24,7 @@ public class SelectHero extends JPanel {
 
     public SelectHero(WindowManager windowManager) {
         this.windowManager = windowManager;
+        Main.logger.logMessage("[SelectHero] Setting up components...");
         initComponents();
     }
 
@@ -127,10 +129,12 @@ public class SelectHero extends JPanel {
     }
 
     private void btnCreate_Click(ActionEvent evt) {
+        Main.logger.logMessage("[SelectHero] Create button clicked");
         windowManager.showNewHero();
     }
 
     private void btnStart_Click(ActionEvent evt) {
+        Main.logger.logMessage("[SelectHero] Start button clicked");
         Hero selectedHero = getSelectedHero();
 
         if (selectedHero != null)
@@ -138,10 +142,12 @@ public class SelectHero extends JPanel {
     }
 
     private void btnConsole_Click(ActionEvent evt) {
+        Main.logger.logMessage("[SelectHero] Console button clicked");
         windowManager.setConsole();
     }
 
     private void lstHeroList_ItemSelected(ListSelectionEvent evt) {
+        Main.logger.logMessage("[SelectHero] List item selected");
         btnStart.setEnabled(lstHeroList.getSelectedIndex() != -1);
 
         Hero selectedHero = getSelectedHero();

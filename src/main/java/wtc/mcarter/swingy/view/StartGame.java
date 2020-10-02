@@ -9,6 +9,7 @@ import javax.swing.WindowConstants;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+import wtc.mcarter.swingy.Main;
 import wtc.mcarter.swingy.controller.GamePlayController;
 import wtc.mcarter.swingy.model.characters.Hero;
 
@@ -20,6 +21,7 @@ public class StartGame extends JDialog implements WindowManager {
         setModal(true);
 
         this.gamePlayController = gamePlayController;
+        Main.logger.logMessage("[StartGame] Window Created, setting up components...");
         initComponents();
     }
 
@@ -61,14 +63,18 @@ public class StartGame extends JDialog implements WindowManager {
     }
 
     private void btnSelect_Click(ActionEvent evt) {
+        Main.logger.logMessage("[StartGame] Select button clicked");
         showSelectHero();
     }
 
     private void btnConsole_Click(ActionEvent evt) {
+        Main.logger.logMessage("[StartGame] Console mode button clicked");
         setConsole();
     }
 
     public void showSelectHero() {
+        Main.logger.logMessage("[StartGame] Showing Select Hero window...");
+
         SelectHero selectHeroPane = new SelectHero(this);
         setContentPane(selectHeroPane);
         setTitle("Select Hero");
@@ -77,6 +83,8 @@ public class StartGame extends JDialog implements WindowManager {
 
     @Override
     public void showNewHero() {
+        Main.logger.logMessage("[StartGame] Showing New Hero window...");
+
         NewHero newHeroPanel = new NewHero(this);
         setContentPane(newHeroPanel);
         setTitle("Create Hero");
@@ -85,6 +93,8 @@ public class StartGame extends JDialog implements WindowManager {
 
     @Override
     public void showGame(Hero hero) {
+        Main.logger.logMessage("[StartGame] Showing Game window...");
+
         PlayGame playGamePanel = new PlayGame(this, hero);
         setContentPane(playGamePanel);
         setTitle("Swingy Game");
@@ -93,6 +103,7 @@ public class StartGame extends JDialog implements WindowManager {
 
     @Override
     public void setConsole() {
+        Main.logger.logMessage("[StartGame] Switching to console mode...");
         gamePlayController.SetConsole();
         this.dispose();
     }

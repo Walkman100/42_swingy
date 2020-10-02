@@ -14,6 +14,7 @@ import javax.swing.LayoutStyle;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+import wtc.mcarter.swingy.Main;
 import wtc.mcarter.swingy.controller.CharacterController;
 
 public class NewHero extends JPanel {
@@ -22,6 +23,7 @@ public class NewHero extends JPanel {
 
     public NewHero(WindowManager windowManager) {
         this.windowManager = windowManager;
+        Main.logger.logMessage("[NewHero] Setting up components...");
         initComponents();
     }
 
@@ -98,6 +100,7 @@ public class NewHero extends JPanel {
     }
 
     private void btnCreate_Click(ActionEvent evt) {
+        Main.logger.logMessage("[NewHero] Create button clicked");
         try {
             characterController.newHero((String) cbxType.getSelectedItem(), txtName.getText());
             windowManager.showSelectHero();
@@ -108,6 +111,7 @@ public class NewHero extends JPanel {
     }
 
     private void btnCancel_Click(ActionEvent evt) {
+        Main.logger.logMessage("[NewHero] Cancel button clicked");
         windowManager.showSelectHero();
     }
 
