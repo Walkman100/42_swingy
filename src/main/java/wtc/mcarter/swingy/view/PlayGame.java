@@ -28,7 +28,7 @@ public class PlayGame extends JPanel {
         this.hero = hero;
         Main.logger.logMessage("[PlayGame] Setting up components...");
         initComponents();
-        initHeroValues();
+        setHeroValues();
 
         game = new Game();
         game.posX = 0;
@@ -177,7 +177,7 @@ public class PlayGame extends JPanel {
         );
     }
 
-    private void initHeroValues() {
+    private void setHeroValues() {
         if (hero != null) {
             lblName.setText(hero.getName());
             lblClass.setText(hero.getClass().getSimpleName());
@@ -207,9 +207,57 @@ public class PlayGame extends JPanel {
         btnMove.setEnabled(true);
     }
 
+    private void setMessage(String message, Object... args) {
+        message = String.format(message, args);
+        txtGameWindow.append(message);
+    }
+
     private void btnMove_Click(ActionEvent evt) {
         Main.logger.logMessage("[PlayGame] Move button clicked");
-        //
+
+        switch (cbxDirection.getSelectedIndex()) {
+            case 0:
+                Main.logger.logMessage("Moving Up...");
+                tryMove(game.posX, game.posY - 1);
+                break;
+            case 1:
+                Main.logger.logMessage("Moving Right...");
+                tryMove(game.posX + 1, game.posY);
+                break;
+            case 2:
+                Main.logger.logMessage("Moving Down...");
+                tryMove(game.posX, game.posY + 1);
+                break;
+            case 3:
+                Main.logger.logMessage("Moving Left...");
+                tryMove(game.posX - 1, game.posY);
+                break;
+        }
+    }
+
+    private void tryMove(int x, int y) {
+        btnMove.setEnabled(false);
+        if (x < -(game.gameSize / 2) || y < -(game.gameSize / 2) || x > game.gameSize / 2 || y > game.gameSize / 2) {
+            Main.logger.logMessage("Invalid location to move to. Aborted.");
+            setMessage("%nInvalid Location!");
+            btnMove.setEnabled(true);
+        } else if (Algos.getEncounteredEnemy()) {
+            btnFight.setEnabled(true);
+            btnRun.setEnabled(true);
+        } else {
+            Main.logger.logMessage("Nothing found at target. Moved to X:%s Y:%s", x, y);
+            doMove(x, y);
+        }
+    }
+
+    private void doMove(int x, int y) {
+        game.posX = x;
+        game.posY = y;
+        btnMove.setEnabled(true);
+        btnFight.setEnabled(false);
+        btnRun.setEnabled(false);
+        setHeroValues();
+        renderMap();
     }
 
     private void btnFight_Click(ActionEvent evt) {
