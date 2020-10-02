@@ -15,13 +15,21 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 import wtc.mcarter.swingy.Main;
 import wtc.mcarter.swingy.model.Game;
+import wtc.mcarter.swingy.model.artifacts.Artifact;
+import wtc.mcarter.swingy.model.characters.BlackMage;
 import wtc.mcarter.swingy.model.characters.Hero;
+import wtc.mcarter.swingy.model.characters.Orc;
+import wtc.mcarter.swingy.model.characters.Villain;
+import wtc.mcarter.swingy.storage.HeroStorage;
 import wtc.mcarter.swingy.util.Algos;
+import wtc.mcarter.swingy.util.Misc;
 
 public class PlayGame extends JPanel {
     private WindowManager windowManager;
     private Hero hero;
+
     private Game game;
+    private Villain villain;
 
     public PlayGame(WindowManager windowManager, Hero hero) {
         this.windowManager = windowManager;
@@ -242,6 +250,14 @@ public class PlayGame extends JPanel {
             setMessage("%nInvalid Location!");
             btnMove.setEnabled(true);
         } else if (Algos.getEncounteredEnemy()) {
+            Main.logger.logMessage("Found enemy!");
+            if (Algos.getRandom(0, 1) == 1)
+                villain = new BlackMage();
+            else
+                villain = new Orc();
+            Main.logger.logMessage("Enemy type: " + villain.getClass().getSimpleName());
+
+            setMessage("%nEncountered enemy %s!", villain.getClass().getSimpleName());
             btnFight.setEnabled(true);
             btnRun.setEnabled(true);
         } else {
@@ -262,12 +278,51 @@ public class PlayGame extends JPanel {
 
     private void btnFight_Click(ActionEvent evt) {
         Main.logger.logMessage("[PlayGame] Fight button clicked");
-        //
+        if (villain != null)
+            fight();
     }
 
     private void btnRun_Click(ActionEvent evt) {
         Main.logger.logMessage("[PlayGame] Run button clicked");
-        //
+        if (villain == null)
+            return;
+
+        if (Algos.getMustFight()) {
+            Main.logger.logMessage("Run failed. Continuing with fight...");
+            setMessage("%nYou were caught!");
+            fight();
+        } else {
+            Main.logger.logMessage("Run back successful.");
+            setMessage("%nRan back successfully.");
+            btnMove.setEnabled(true);
+            btnFight.setEnabled(false);
+            btnRun.setEnabled(false);
+        }
+    }
+
+    private void fight() {
+        btnFight.setEnabled(false);
+        btnRun.setEnabled(false);
+        Main.logger.logMessage("Fighting enemy %s...", villain.getClass().getSimpleName());
+        Artifact droppedArtifact = windowManager.SimulateFight(hero, villain);
+        setHeroValues();
+
+        if (droppedArtifact != null) {
+            //
+        } else if (villain.getHp() <= 0) {
+            Main.logger.logMessage("Enemy defeated, no artifact dropped.");
+            setMessage("%nDefeated enemy!");
+        }
+
+        if (villain.getHp() <= 0) {
+            //
+        } else if (hero.getHp() <= 0) {
+            setMessage("%nYou Died!");
+            setHeroValues();
+            HeroStorage.RemoveHero(hero);
+            hero = null;
+        }
+        villain = null;
     }
 
     private void btnBack_Click(ActionEvent evt) {

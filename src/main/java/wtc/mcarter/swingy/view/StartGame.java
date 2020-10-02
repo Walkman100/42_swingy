@@ -11,7 +11,9 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 import wtc.mcarter.swingy.Main;
 import wtc.mcarter.swingy.controller.GamePlayController;
+import wtc.mcarter.swingy.model.artifacts.Artifact;
 import wtc.mcarter.swingy.model.characters.Hero;
+import wtc.mcarter.swingy.model.characters.Villain;
 
 public class StartGame extends JDialog implements WindowManager {
     private GamePlayController gamePlayController;
@@ -104,6 +106,11 @@ public class StartGame extends JDialog implements WindowManager {
         Main.logger.logMessage("[StartGame] Switching to console mode...");
         gamePlayController.SetConsole();
         this.dispose();
+    }
+
+    @Override
+    public Artifact SimulateFight(Hero hero, Villain villain) {
+        return gamePlayController.SimulateFight(hero, villain);
     }
 
     private JButton btnSelect;
