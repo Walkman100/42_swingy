@@ -126,7 +126,7 @@ public class SelectHero extends JPanel {
         Hero selectedHero = getSelectedHero();
 
         if (selectedHero != null)
-            windowManager.showSelectMission(selectedHero);
+            windowManager.showGame(selectedHero);
     }
 
     private void lstHeroList_ItemSelected(ListSelectionEvent evt) {

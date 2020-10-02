@@ -63,9 +63,9 @@ public class StartGame extends JDialog implements WindowManager {
     }
 
     @Override
-    public void showSelectMission(Hero hero) {
-        PlayMission playMissionPanel = new PlayMission(this, hero);
-        setContentPane(playMissionPanel);
+    public void showGame(Hero hero) {
+        PlayGame playGamePanel = new PlayGame(this, hero);
+        setContentPane(playGamePanel);
         pack();
     }
 

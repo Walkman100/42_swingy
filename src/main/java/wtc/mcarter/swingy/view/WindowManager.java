@@ -5,5 +5,5 @@ import wtc.mcarter.swingy.model.characters.Hero;
 public interface WindowManager {
     void showSelectHero();
     void showNewHero();
-    void showSelectMission(Hero hero);
+    void showGame(Hero hero);
 }
