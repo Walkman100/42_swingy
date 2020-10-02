@@ -8,6 +8,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -17,7 +18,7 @@ import javax.swing.event.ListSelectionEvent;
 import wtc.mcarter.swingy.model.characters.Hero;
 import wtc.mcarter.swingy.storage.HeroStorage;
 
-public class SelectHero extends javax.swing.JPanel {
+public class SelectHero extends JPanel {
     private WindowManager windowManager;
 
     public SelectHero(WindowManager windowManager) {

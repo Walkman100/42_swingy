@@ -33,6 +33,7 @@ public class NewHero extends JPanel {
         errorMessage.setForeground(Color.RED);
         cbxType = new JComboBox<>();
         btnCreate = new JButton();
+        btnCancel = new JButton();
 
         lblName.setText("Name");
         lblType.setText("Type");
@@ -40,6 +41,10 @@ public class NewHero extends JPanel {
         btnCreate.setText("Create");
         btnCreate.addActionListener((evt) -> {
             btnCreate_Click(evt);
+        });
+        btnCancel.setText("Cancel");
+        btnCancel.addActionListener((evt) -> {
+            btnCancel_Click(evt);
         });
 
         GroupLayout layout = new GroupLayout(this);
@@ -67,7 +72,9 @@ public class NewHero extends JPanel {
                                 .addComponent(errorMessage))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(80, 80, 80)
-                                .addComponent(btnCreate)))
+                                .addComponent(btnCreate)
+                                .addPreferredGap(ComponentPlacement.RELATED)
+                                .addComponent(btnCancel)))
                         .addContainerGap(30, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -83,7 +90,9 @@ public class NewHero extends JPanel {
                         .addComponent(txtName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                     .addPreferredGap(ComponentPlacement.UNRELATED)
                     .addComponent(errorMessage)
-                    .addComponent(btnCreate)
+                    .addGroup(layout.createParallelGroup(Alignment.BASELINE)
+                        .addComponent(btnCreate)
+                        .addComponent(btnCancel))
                     .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }
@@ -98,7 +107,12 @@ public class NewHero extends JPanel {
         }
     }
 
+    private void btnCancel_Click(ActionEvent evt) {
+        windowManager.showSelectHero();
+    }
+
     private JButton btnCreate;
+    private JButton btnCancel;
     private JComboBox<String> cbxType;
     private JLabel lblName;
     private JLabel lblType;
