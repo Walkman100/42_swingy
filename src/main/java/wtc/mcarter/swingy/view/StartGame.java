@@ -1,8 +1,15 @@
 package wtc.mcarter.swingy.view;
 
+import java.awt.event.ActionEvent;
+
+import javax.swing.GroupLayout;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.WindowConstants;
+
 import wtc.mcarter.swingy.model.characters.Hero;
 
-public class StartGame extends javax.swing.JDialog implements WindowManager {
+public class StartGame extends JDialog implements WindowManager {
     public StartGame() {
         super((java.awt.Window) null, "Select Hero");
         setModal(true);
@@ -12,35 +19,33 @@ public class StartGame extends javax.swing.JDialog implements WindowManager {
     // /unchecked/
 
     private void initComponents() {
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
-        jButton1 = new javax.swing.JButton();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
-        jButton1.setText("Select hero");
-        jButton1.addActionListener((evt) -> {
-            jButton1ActionPerformed(evt);
+        btnSelect = new JButton();
+        btnSelect.setText("Select hero");
+        btnSelect.addActionListener((evt) -> {
+            btnSelect_Click(evt);
         });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addContainerGap(122, Short.MAX_VALUE)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnSelect, GroupLayout.PREFERRED_SIZE, 190, GroupLayout.PREFERRED_SIZE)
                                 .addGap(88, 88, 88)));
         layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addContainerGap(142, Short.MAX_VALUE)
-                                .addComponent(jButton1)
+                                .addComponent(btnSelect)
                                 .addGap(135, 135, 135)));
 
         pack();
     }
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+    private void btnSelect_Click(ActionEvent evt) {
         showSelectHero();
     }
 
@@ -64,5 +69,5 @@ public class StartGame extends javax.swing.JDialog implements WindowManager {
         pack();
     }
 
-    private javax.swing.JButton jButton1;
+    private JButton btnSelect;
 }
