@@ -35,7 +35,7 @@ public class GamePlayController {
                 Main.logger.logMessage("Starting GUI mode");
 
                 UIManager.put("swing.boldMetal", Boolean.FALSE);
-                JDialog frame = new StartGame();
+                JDialog frame = new StartGame(this);
                 frame.setVisible(true); // on a JDialog, this will block until window is disposed
             }
         } while (mode != "");

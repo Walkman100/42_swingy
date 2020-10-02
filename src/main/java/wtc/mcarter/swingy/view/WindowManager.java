@@ -6,4 +6,5 @@ public interface WindowManager {
     void showSelectHero();
     void showNewHero();
     void showGame(Hero hero);
+    void setConsole();
 }

@@ -57,6 +57,7 @@ public class SelectHero extends JPanel {
 
         btnCreate = new JButton();
         btnStart = new JButton();
+        btnConsole = new JButton();
         lblHeroList = new JLabel();
         lblHeroStats = new JLabel();
         txtHeroStats = new JTextArea();
@@ -70,6 +71,10 @@ public class SelectHero extends JPanel {
             btnStart_Click(evt);
         });
         btnStart.setEnabled(false);
+        btnConsole.setText("Console Mode");
+        btnConsole.addActionListener((evt) -> {
+            btnConsole_Click(evt);
+        });
         lblHeroList.setText("Hero List");
         lblHeroStats.setText("Hero Stats");
         setHeroStats("", "", "", "", "", "", "", "");
@@ -95,6 +100,8 @@ public class SelectHero extends JPanel {
                     .addComponent(btnStart)
                     .addPreferredGap(ComponentPlacement.RELATED)
                     .addComponent(btnCreate)
+                    .addPreferredGap(ComponentPlacement.RELATED)
+                    .addComponent(btnConsole)
                     .addContainerGap(30, Short.MAX_VALUE))
         );
 
@@ -113,7 +120,8 @@ public class SelectHero extends JPanel {
                 .addPreferredGap(ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(Alignment.BASELINE)
                     .addComponent(btnStart)
-                    .addComponent(btnCreate))
+                    .addComponent(btnCreate)
+                    .addComponent(btnConsole))
                 .addContainerGap(30, Short.MAX_VALUE)
         );
     }
@@ -127,6 +135,10 @@ public class SelectHero extends JPanel {
 
         if (selectedHero != null)
             windowManager.showGame(selectedHero);
+    }
+
+    private void btnConsole_Click(ActionEvent evt) {
+        windowManager.setConsole();
     }
 
     private void lstHeroList_ItemSelected(ListSelectionEvent evt) {
@@ -146,6 +158,7 @@ public class SelectHero extends JPanel {
 
     private JButton btnCreate;
     private JButton btnStart;
+    private JButton btnConsole;
     private JLabel lblHeroList;
     private JList<String> lstHeroList;
     private JLabel lblHeroStats;
