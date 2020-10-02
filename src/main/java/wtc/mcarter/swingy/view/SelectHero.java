@@ -1,6 +1,8 @@
 package wtc.mcarter.swingy.view;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
@@ -54,6 +56,12 @@ public class SelectHero extends JPanel {
         lstHeroList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         lstHeroList.addListSelectionListener((evt) -> {
             lstHeroList_ItemSelected(evt);
+        });
+        // https://stackoverflow.com/a/4344762/2999220
+        lstHeroList.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
+                lstHeroList_MouseClick(evt);
+            };
         });
         JScrollPane lstHeroListScrollPane = new JScrollPane(lstHeroList);
 
@@ -154,6 +162,17 @@ public class SelectHero extends JPanel {
             return;
         } else {
             setHeroStats("", "", "", "", "", "", "", "");
+        }
+    }
+
+    private void lstHeroList_MouseClick(MouseEvent evt) {
+        if (evt.getClickCount() == 2) {
+            // Double-click detected
+            Main.logger.logMessage("[SelectHero] List double-clicked");
+            Hero selectedHero = getSelectedHero();
+
+            if (selectedHero != null)
+                windowManager.showGame(selectedHero);
         }
     }
 
