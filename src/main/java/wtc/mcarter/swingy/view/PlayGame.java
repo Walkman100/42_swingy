@@ -21,12 +21,19 @@ import wtc.mcarter.swingy.util.Algos;
 public class PlayGame extends JPanel {
     private WindowManager windowManager;
     private Hero hero;
+    private Game game;
 
     public PlayGame(WindowManager windowManager, Hero hero) {
         this.windowManager = windowManager;
         this.hero = hero;
         Main.logger.logMessage("[PlayGame] Setting up components...");
         initComponents();
+        initHeroValues();
+
+        game = new Game();
+        game.posX = 0;
+        game.posY = 0;
+        renderMap();
     }
 
     private void initComponents() {
@@ -58,9 +65,25 @@ public class PlayGame extends JPanel {
         cbxDirection.setModel(
                 new DefaultComboBoxModel<>(new String[] { "North/Up", "East/Right", "South/Down", "West/Left" }));
         btnMove.setEnabled(false);
+        btnMove.addActionListener((evt) -> {
+            btnMove_Click(evt);
+        });
         btnFight.setEnabled(false);
+        btnFight.addActionListener((evt) -> {
+            btnFight_Click(evt);
+        });
         btnRun.setEnabled(false);
+        btnRun.addActionListener((evt) -> {
+            btnRun_Click(evt);
+        });
+        btnBack.addActionListener((evt) -> {
+            btnBack_Click(evt);
+        });
+        btnConsole.addActionListener((evt) -> {
+            btnConsole_Click(evt);
+        });
         txtGameWindow.setEditable(false);
+        // txtGameWindow.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
 
         GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);
@@ -152,6 +175,61 @@ public class PlayGame extends JPanel {
                 .addGroup(layout.createSequentialGroup()
                     .addComponent(txtGameWindow))
         );
+    }
+
+    private void initHeroValues() {
+        if (hero != null) {
+            lblName.setText(hero.getName());
+            lblClass.setText(hero.getClass().getSimpleName());
+            lblLevel.setText(Integer.toString(hero.getLevel()));
+            lblXP.setText(Integer.toString(hero.getExperience()));
+            lblHP.setText(Integer.toString(hero.getHp()));
+            lblATK.setText(String.format("%s+%s", hero.getBaseAttack(), hero.getWeapon().getDamage()));
+            lblDEF.setText(String.format("%s+%s", hero.getBaseDefense(), hero.getArmor().getDefense()));
+        }
+    }
+
+    private void renderMap() {
+        String newText = "";
+
+        game.gameSize = Algos.getGameSize(hero.getLevel());
+        for (int y = -(game.gameSize / 2); y <= game.gameSize / 2; y++) {
+            for (int x = -(game.gameSize / 2); x <= game.gameSize / 2; x++) {
+                if (x == game.posX && y == game.posY)
+                    newText += " X  ";
+                else
+                    newText += "▒ ";
+            }
+            newText += System.lineSeparator();
+        }
+
+        txtGameWindow.setText(newText);
+        btnMove.setEnabled(true);
+    }
+
+    private void btnMove_Click(ActionEvent evt) {
+        Main.logger.logMessage("[PlayGame] Move button clicked");
+        //
+    }
+
+    private void btnFight_Click(ActionEvent evt) {
+        Main.logger.logMessage("[PlayGame] Fight button clicked");
+        //
+    }
+
+    private void btnRun_Click(ActionEvent evt) {
+        Main.logger.logMessage("[PlayGame] Run button clicked");
+        //
+    }
+
+    private void btnBack_Click(ActionEvent evt) {
+        Main.logger.logMessage("[PlayGame] Back button clicked");
+        windowManager.showSelectHero();
+    }
+
+    private void btnConsole_Click(ActionEvent evt) {
+        Main.logger.logMessage("[PlayGame] Console button clicked");
+        windowManager.setConsole();
     }
 
     private JLabel lblNameLbl;
