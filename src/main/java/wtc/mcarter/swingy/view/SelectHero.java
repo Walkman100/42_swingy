@@ -57,28 +57,23 @@ public class SelectHero extends JPanel {
         });
         JScrollPane lstHeroListScrollPane = new JScrollPane(lstHeroList);
 
-        btnCreate = new JButton();
-        btnStart = new JButton();
-        btnConsole = new JButton();
-        lblHeroList = new JLabel();
-        lblHeroStats = new JLabel();
-        txtHeroStats = new JTextArea();
+        btnCreate = new JButton("Create");
+        btnStart = new JButton("Start");
+        btnConsole = new JButton("Console Mode");
+        lblHeroList = new JLabel("Hero List");
+        lblHeroStats = new JLabel("Hero Stats");
+        txtHeroStats = new JTextArea("");
 
-        btnCreate.setText("Create");
         btnCreate.addActionListener((evt) -> {
             btnCreate_Click(evt);
         });
-        btnStart.setText("Start");
         btnStart.addActionListener((evt) -> {
             btnStart_Click(evt);
         });
         btnStart.setEnabled(false);
-        btnConsole.setText("Console Mode");
         btnConsole.addActionListener((evt) -> {
             btnConsole_Click(evt);
         });
-        lblHeroList.setText("Hero List");
-        lblHeroStats.setText("Hero Stats");
         setHeroStats("", "", "", "", "", "", "", "");
         txtHeroStats.setEditable(false);
 
@@ -147,7 +142,7 @@ public class SelectHero extends JPanel {
     }
 
     private void lstHeroList_ItemSelected(ListSelectionEvent evt) {
-        Main.logger.logMessage("[SelectHero] List item selected");
+        Main.logger.logMessage("[SelectHero] List item selected: %s", lstHeroList.getSelectedIndex());
         btnStart.setEnabled(lstHeroList.getSelectedIndex() != -1);
 
         Hero selectedHero = getSelectedHero();

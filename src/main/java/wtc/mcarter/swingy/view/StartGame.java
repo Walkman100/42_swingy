@@ -30,13 +30,11 @@ public class StartGame extends JDialog implements WindowManager {
     private void initComponents() {
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
-        btnSelect = new JButton();
-        btnSelect.setText("Select hero");
+        btnSelect = new JButton("Select hero");
         btnSelect.addActionListener((evt) -> {
             btnSelect_Click(evt);
         });
-        btnConsole = new JButton();
-        btnConsole.setText("Console Mode");
+        btnConsole = new JButton("Console Mode");
         btnConsole.addActionListener((evt) -> {
             btnConsole_Click(evt);
         });

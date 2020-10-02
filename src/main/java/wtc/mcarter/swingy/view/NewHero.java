@@ -29,22 +29,18 @@ public class NewHero extends JPanel {
 
     private void initComponents() {
         txtName = new JTextField();
-        lblName = new JLabel();
-        lblType = new JLabel();
+        lblName = new JLabel("Name");
+        lblType = new JLabel("Type");
         errorMessage = new JLabel();
         errorMessage.setForeground(Color.RED);
         cbxType = new JComboBox<>();
-        btnCreate = new JButton();
-        btnCancel = new JButton();
+        btnCreate = new JButton("Create");
+        btnCancel = new JButton("Cancel");
 
-        lblName.setText("Name");
-        lblType.setText("Type");
         cbxType.setModel(new DefaultComboBoxModel<>(new String[] { "Knight", "Elf" }));
-        btnCreate.setText("Create");
         btnCreate.addActionListener((evt) -> {
             btnCreate_Click(evt);
         });
-        btnCancel.setText("Cancel");
         btnCancel.addActionListener((evt) -> {
             btnCancel_Click(evt);
         });
@@ -67,8 +63,7 @@ public class NewHero extends JPanel {
                                         .addComponent(lblName)
                                         .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(txtName, GroupLayout.PREFERRED_SIZE, 190, GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                                    )))
+                                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(29, 29, 29)
                                 .addComponent(errorMessage))
