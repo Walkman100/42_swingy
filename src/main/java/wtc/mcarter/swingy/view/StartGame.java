@@ -71,6 +71,7 @@ public class StartGame extends JDialog implements WindowManager {
     public void showSelectHero() {
         SelectHero selectHeroPane = new SelectHero(this);
         setContentPane(selectHeroPane);
+        setTitle("Select Hero");
         pack();
     }
 
@@ -78,6 +79,7 @@ public class StartGame extends JDialog implements WindowManager {
     public void showNewHero() {
         NewHero newHeroPanel = new NewHero(this);
         setContentPane(newHeroPanel);
+        setTitle("Create Hero");
         pack();
     }
 
@@ -85,6 +87,7 @@ public class StartGame extends JDialog implements WindowManager {
     public void showGame(Hero hero) {
         PlayGame playGamePanel = new PlayGame(this, hero);
         setContentPane(playGamePanel);
+        setTitle("Swingy Game");
         pack();
     }
 
