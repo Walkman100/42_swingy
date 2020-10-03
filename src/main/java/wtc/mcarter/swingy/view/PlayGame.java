@@ -1,6 +1,5 @@
 package wtc.mcarter.swingy.view;
 
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 
 import javax.swing.DefaultComboBoxModel;
@@ -91,7 +90,7 @@ public class PlayGame extends JPanel {
             btnConsole_Click(evt);
         });
         txtGameWindow.setEditable(false);
-        // txtGameWindow.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
+        // txtGameWindow.setFont(new java.awt.Font(java.awt.Font.MONOSPACED, java.awt.Font.PLAIN, 12));
 
         GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);
@@ -260,11 +259,16 @@ public class PlayGame extends JPanel {
             setMessage("%nEncountered enemy %s!", villain.getClass().getSimpleName());
             btnFight.setEnabled(true);
             btnRun.setEnabled(true);
+            newX = x;
+            newY = y;
         } else {
             Main.logger.logMessage("Nothing found at target. Moved to X:%s Y:%s", x, y);
             doMove(x, y);
         }
     }
+
+    private int newX;
+    private int newY;
 
     private void doMove(int x, int y) {
         game.posX = x;
@@ -315,7 +319,11 @@ public class PlayGame extends JPanel {
         }
 
         if (villain.getHp() <= 0) {
-            //
+            Main.logger.logMessage("Enemy dropped %s XP", villain.getXpDrop());
+            Misc.addXP(hero, villain.getXpDrop());
+
+            Main.logger.logMessage("Moved to X:%s Y:%s", newX, newY);
+            doMove(newX, newY);
         } else if (hero.getHp() <= 0) {
             setMessage("%nYou Died!");
             setHeroValues();
