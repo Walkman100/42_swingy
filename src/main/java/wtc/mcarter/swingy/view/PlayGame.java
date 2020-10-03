@@ -191,7 +191,7 @@ public class PlayGame extends JPanel {
             lblClass.setText(hero.getClass().getSimpleName());
             lblLevel.setText(Integer.toString(hero.getLevel()));
             lblXP.setText(Integer.toString(hero.getExperience()));
-            lblHP.setText(Integer.toString(hero.getHp()));
+            lblHP.setText(Integer.toString(Math.max(hero.getHp(), 0)));
             lblATK.setText(String.format("%s+%s", hero.getBaseAttack(), hero.getWeapon().getDamage()));
             lblDEF.setText(String.format("%s+%s", hero.getBaseDefense(), hero.getArmor().getDefense()));
         }

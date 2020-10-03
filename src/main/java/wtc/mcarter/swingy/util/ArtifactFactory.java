@@ -15,7 +15,7 @@ public class ArtifactFactory {
         int droppedType = Algos.getRandom(0, 2);
         switch (droppedType) {
             case 0: // get random from 1 because we don't want to create a "Fist" weapon (ATK 0)
-                return new Weapon(WeaponType.values()[Algos.getRandom(1, WeaponType.values().length)]);
+                return new Weapon(WeaponType.values()[Algos.getRandom(1, WeaponType.values().length - 1)]);
             case 1:
                 return new Armor(Algos.getRandom(2, 10));
             case 2:
