@@ -1,5 +1,6 @@
 package wtc.mcarter.swingy.view;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 
 import javax.swing.DefaultComboBoxModel;
@@ -194,6 +195,11 @@ public class PlayGame extends JPanel {
             lblHP.setText(Integer.toString(Math.max(hero.getHp(), 0)));
             lblATK.setText(String.format("%s+%s", hero.getBaseAttack(), hero.getWeapon().getDamage()));
             lblDEF.setText(String.format("%s+%s", hero.getBaseDefense(), hero.getArmor().getDefense()));
+            if (hero.getHp() < 10) {
+                lblHP.setForeground(Color.RED);
+            } else {
+                lblHP.setForeground(new Color(51, 51, 51)); // default color
+            }
         }
     }
 
