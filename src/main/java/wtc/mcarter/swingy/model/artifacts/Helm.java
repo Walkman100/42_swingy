@@ -12,7 +12,7 @@ public class Helm implements Artifact {
     }
 
     public String getEffect() {
-        return "HP Boost: " + hpBoost;
+        return "HP Boost: +" + hpBoost;
     }
 
     public void setToHero(Hero hero) {

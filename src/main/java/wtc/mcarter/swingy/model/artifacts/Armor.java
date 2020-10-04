@@ -12,7 +12,7 @@ public class Armor implements Artifact {
     }
 
     public String getEffect() {
-        return "Defense: " + defense;
+        return "Defense: +" + defense;
     }
 
     public void setToHero(Hero hero) {
