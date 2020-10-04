@@ -285,6 +285,13 @@ public class PlayGame extends JPanel {
         btnRun.setEnabled(false);
         setHeroValues();
         renderMap();
+
+        if (Algos.isOnEdge(game.posX, game.posY, game.gameSize)) {
+            if (JOptionPane.showConfirmDialog(this, "Mission Won! Continue?", "Mission Won", JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION) {
+                windowManager.showSelectHero();
+                // currently all calls to this end here, so we should be safe just changing windows
+            }
+        }
     }
 
     private void btnFight_Click(ActionEvent evt) {

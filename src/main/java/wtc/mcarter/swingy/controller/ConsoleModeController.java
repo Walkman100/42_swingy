@@ -243,6 +243,17 @@ public class ConsoleModeController {
             game.posX = x;
             game.posY = y;
         }
+
+        if (Algos.isOnEdge(game.posX, game.posY, game.gameSize)) {
+            Main.logger.write("%nMission Won! Continue (y/*)?");
+            String input = Misc.getInput();
+            if (!input.toLowerCase().equals("y")) {
+                gamePlayController.SetConsole();
+                shouldQuit = true;
+            }
+            return;
+        }
+
         System.console().readLine();
     }
 

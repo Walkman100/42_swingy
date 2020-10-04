@@ -9,6 +9,10 @@ public class Algos {
         return (level - 1) * 5 + 10 - (level % 2);
     }
 
+    public static boolean isOnEdge(int x, int y, int gameSize) {
+        return (x == -(gameSize / 2) || x == gameSize / 2 || y == -(gameSize / 2) || y == gameSize / 2);
+    }
+
     public static int getXPRequired(int level) {
         return level * 1000 + (int)Math.pow(level - 1, 2) * 450;
     }
