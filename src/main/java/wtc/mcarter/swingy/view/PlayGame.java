@@ -8,6 +8,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -312,7 +313,15 @@ public class PlayGame extends JPanel {
         setHeroValues();
 
         if (droppedArtifact != null) {
-            //
+            Main.logger.logMessage("Enemy defeated, artifact dropped: %s Effect: %s", droppedArtifact.getClass().getSimpleName(), droppedArtifact.getEffect());
+
+            setMessage("%nDefeated enemy dropped an artifact. Type: %s Effect: %s", droppedArtifact.getClass().getSimpleName(), droppedArtifact.getEffect());
+            if (JOptionPane.showConfirmDialog(this,
+                    String.format("Type: %s%nEffect: %s%n%nEquip?", droppedArtifact.getClass().getSimpleName(), droppedArtifact.getEffect()),
+                    "Enemy dropped Artifact", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                Main.logger.logMessage("Equipping artifact");
+                droppedArtifact.setToHero(hero);
+            }
         } else if (villain.getHp() <= 0) {
             Main.logger.logMessage("Enemy defeated, no artifact dropped.");
             setMessage("%nDefeated enemy!");
