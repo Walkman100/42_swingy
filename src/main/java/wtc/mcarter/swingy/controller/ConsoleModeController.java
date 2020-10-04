@@ -51,7 +51,7 @@ public class ConsoleModeController {
         clear();
         Main.logger.logMessage("Showing hero selection...");
         Main.logger.writeLine("Choose a character - enter the number and press enter");
-        Main.logger.writeLine("Create character: n; Switch to GUI: g; Exit: e/d/q" + System.lineSeparator());
+        Main.logger.writeLine("Create character: n; Switch to GUI: g; Exit: e/d/q%n");
 
         Main.logger.writeLine("  # | Name                 | Class  | Level |   XP | ATK | DEF |  HP |");
         for (int i = 0; i < HeroStorage.getHeroList().size(); i++) {
@@ -91,7 +91,7 @@ public class ConsoleModeController {
     private void showCreateHero() {
         clear();
         Main.logger.logMessage("Showing hero creation...");
-        Main.logger.writeLine("Choose hero type:" + System.lineSeparator());
+        Main.logger.writeLine("Choose hero type:%n");
 
         int sel = 0;
         for (HeroTypes heroType : HeroTypes.values()) {
@@ -112,7 +112,7 @@ public class ConsoleModeController {
             return;
         }
 
-        Main.logger.writeLine(System.lineSeparator() + "Enter hero name:");
+        Main.logger.writeLine("%nEnter hero name:");
         input = Misc.getInput();
         Main.logger.logMessage("Got new hero name input: " + input);
 
@@ -140,7 +140,7 @@ public class ConsoleModeController {
         }
 
         // take user input
-        Main.logger.write(System.lineSeparator() + "Enter move command (l/r/u/d/n/e/s/w, q/g):");
+        Main.logger.write("%nEnter move command (l/r/u/d/n/e/s/w, q/g):");
         String input = Misc.getInput();
         Main.logger.logMessage("Got movement input: " + input);
 

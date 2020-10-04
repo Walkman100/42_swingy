@@ -22,17 +22,9 @@ public class Logger {
         System.out.println();
     }
 
-    public void writeLine(String line) {
-        System.out.println(line);
-    }
-
     public void writeLine(String line, Object... args) {
         line = String.format(line, args);
         System.out.println(line);
-    }
-
-    public void write(String text) {
-        System.out.print(text);
     }
 
     public void write(String text, Object... args) {
@@ -51,10 +43,6 @@ public class Logger {
             writeLine("Error writing to log file:");
             e.printStackTrace();
         }
-    }
-
-    public void logMessage(String message) {
-        logMessage(message, false);
     }
 
     public void logMessage(String message, Object... args) {
